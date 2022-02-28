@@ -1,0 +1,9 @@
+h1 {
+	font-size: 64px;
+	font-style: italic;
+}
+/* Das ist ein Kommentar!*/
+p  {
+	font-size: 32px;
+	font-style: bold;
+}
