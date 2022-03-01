@@ -60,13 +60,28 @@
 					$string =  mb_convert_encoding($string, "Windows-1252", $charset);
 					return $string;
 				}
-				$myfile = fopen("stricherliste.csv", "r") or die("Unable to open file!");
-				$list = fgetcsv($myfile);
+				$myfile = fopen("stricherliste_log.csv", "r") or die("Unable to open file!");
+				$data = array();
+				while (($line = fgetcsv($myfile, 1000, ";")) !== FALSE) {
+					array_push($data, fgetcsv($myfile, 1000,";"));
+					}
 				fclose($myfile);
-				$myfile = fopen("stricherliste.csv", "a") or die("Unable to open file!");
+				$myfile = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
 				$txt = strval($_POST["name"]) . ";Bier;" . strval($_POST["bier"]) . ";Toast;" . strval($_POST["toast"]) . "\n";
 				fwrite($myfile, convertToWindowsCharset($txt));
 				fclose($myfile);
+				$myfile2 = fopen("stricherliste.csv", "w") or die("Unable to open file!");
+				foreach ($data as $element) {
+					if($element[0] == $_POST["name"]){
+						$element[2] += $_POST["bier"];
+						$element[4] += $_POST["toast"];
+					}
+				}
+				echo($data[0][2]);
+				$txt = strval($_POST["name"]) . ";Bier;" . strval($_POST["bier"]) . ";Toast;" . strval($_POST["toast"]) . "\n";
+				fwrite($myfile2, convertToWindowsCharset($txt));
+				fclose($myfile2);
+
 			}
 		 
 	
