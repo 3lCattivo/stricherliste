@@ -45,8 +45,8 @@
 						select.options[select.options.length] = new Option(example_array[index], index);
 					}
 				</script>
-				<td><input name="bier" type="number"  step="1" min="0" ></textarea></td>
-				<td><input name="toast" type="number" step="1" min="0" ></td>
+				<td><input name="bier" type="number"  step="1" min="0", max="100" ></textarea></td>
+				<td><input name="toast" type="number" step="1" min="0" max="100" ></td>
 			</tr>
 		</form>
 		</table> 
@@ -60,27 +60,37 @@
 					$string =  mb_convert_encoding($string, "Windows-1252", $charset);
 					return $string;
 				}
-				$myfile = fopen("stricherliste_log.csv", "r") or die("Unable to open file!");
+				
+				$myfile = fopen("stricherliste.csv", "r") or die("Unable to open file!");
 				$data = array();
 				while (($line = fgetcsv($myfile, 1000, ";")) !== FALSE) {
-					array_push($data, fgetcsv($myfile, 1000,";"));
+					array_push($data, $line);
 					}
 				fclose($myfile);
+				
 				$myfile = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
 				$txt = strval($_POST["name"]) . ";Bier;" . strval($_POST["bier"]) . ";Toast;" . strval($_POST["toast"]) . "\n";
 				fwrite($myfile, convertToWindowsCharset($txt));
 				fclose($myfile);
-				$myfile2 = fopen("stricherliste.csv", "w") or die("Unable to open file!");
+				
+				$liste = fopen("stricherliste.csv", "w") or die("Unable to open file!");
+				$header = array("Name", "Bier", "Toast");
+				#fputcsv($liste, $header, ";");
+				$name_flag = False;
 				foreach ($data as $element) {
 					if($element[0] == $_POST["name"]){
-						$element[2] += $_POST["bier"];
-						$element[4] += $_POST["toast"];
+						$element[1] += intval($_POST["bier"]);
+						$element[2] += intval($_POST["toast"]);
+						$name_flag = True;
 					}
+
+					fputcsv($liste, $element, ";");
 				}
-				echo($data[0][2]);
-				$txt = strval($_POST["name"]) . ";Bier;" . strval($_POST["bier"]) . ";Toast;" . strval($_POST["toast"]) . "\n";
-				fwrite($myfile2, convertToWindowsCharset($txt));
-				fclose($myfile2);
+				if($name_flag == False){
+					$new_name = array($_POST["name"], intval($_POST["bier"]), intval($_POST["toast"]));
+					fputcsv($liste, $new_name, ";");
+				}
+				fclose($liste);
 
 			}
 		 
