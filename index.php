@@ -25,7 +25,7 @@
 	</head>
 
 	<body>
-	
+
 		<form method="post">
 		<h1>Die Stricherliste</h1>
 		<table>
