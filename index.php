@@ -2,7 +2,7 @@
 <html>
 
 	<head>
-
+		<!--looki looki -> https://w3codegenerator.com/article/how-to-display-select-option-of-select-tag-as-selected-using-foreach-method-in-php -->
 		<meta charset="UTF-8">
 		<meta name="viewport" content="user-scalable=no, width=device-width">
 
@@ -10,22 +10,26 @@
 
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<!--So geht ein Kommentar-->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
 
-		<script>
-				$.get("namen.json",
-					  function(data) {
-						for (i in data) {
-						  $("#name").append('<option value=' + data[i] + '>' + data[i] + '</option>');
-						}
-			  });
-
-		</script>
+		
 		
 	</head>
 
 	<body>
-
+	
+	
+	<?php 
+		#Hier Namen aus File holen und in array schreiben.
+		$names = array();
+		$name_file = fopen("namen.csv", "r") or die("Unable to open file!");
+		while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
+			array_push($names, $line[0]);
+		}		
+		fclose($name_file);
+		$data = $names#array(1 =>"Martl", 2=>"Diegl", 3=>"Boris"); ?>
+	
+	
 		<form method="post">
 		<h1>Die Stricherliste</h1>
 		<table>
@@ -36,20 +40,20 @@
 			</tr>
 			<tr>
 			<td><select name="name" id="name">
-				</select></td>
-				<script>	
+			<?php
+				foreach($data as $key => $val){
+					echo('<option value=' . $val . '>' . $val . '</option>');
+				}
+			?>
 
-					var select = document.getElementById("name");
-					for(index in example_array) 
-					{
-						select.options[select.options.length] = new Option(example_array[index], index);
-					}
-				</script>
+				</select></td>
 				<td><input name="bier" type="number"  step="1" min="0", max="100" ></textarea></td>
 				<td><input name="toast" type="number" step="1" min="0" max="100" ></td>
 			</tr>
 		</form>
 		</table> 
+		
+		
 		<button type="submit">Hinzufügen!</button> 
 
 		<?php
@@ -93,13 +97,8 @@
 				fclose($liste);
 
 			}
-		 
-	
 		?>
 		
-		
-
-
 	</body>
 
 </html>
