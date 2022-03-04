@@ -13,11 +13,17 @@
 		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
 		
 		<?php 
+			header('Content-type: text/html; charset=utf-8');
+			function convertToWindowsCharset($string) {
+				$charset =  mb_detect_encoding($string,"UTF-8, ISO-8859-1, ISO-8859-15",true);
+				$string =  mb_convert_encoding($string, "UTF-8", $charset);
+				return $string;
+			}
 			#Get Names from Array and write to csv
 			$names = array();
 			$name_file = fopen("namen.csv", "r") or die("Unable to open file!");
 			while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
-				array_push($names, $line[0]);
+				array_push($names, convertToWindowsCharset($line[0]));
 			}		
 			fclose($name_file);
 		?>
@@ -26,10 +32,6 @@
 	</head>
 
 	<body>
-	
-	
-
-	
 	
 		<form method="post">
 		<h1>Die Stricherliste</h1>
@@ -59,13 +61,8 @@
 
 		<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-				function convertToWindowsCharset($string) {
-					$charset =  mb_detect_encoding($string,"UTF-8, ISO-8859-1, ISO-8859-15",true);
-					$string =  mb_convert_encoding($string, "Windows-1252", $charset);
-					return $string;
-				}
 				
+				#Get data from list
 				$bierliste = fopen("stricherliste.csv", "r") or die("Unable to open file!");
 				$bier_data = array();
 				while (($line = fgetcsv($bierliste, 1000, ";")) !== FALSE) {
