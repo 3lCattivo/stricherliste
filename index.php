@@ -11,7 +11,16 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<!--So geht ein Kommentar-->
 		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
-
+		
+		<?php 
+			#Get Names from Array and write to csv
+			$names = array();
+			$name_file = fopen("namen.csv", "r") or die("Unable to open file!");
+			while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
+				array_push($names, $line[0]);
+			}		
+			fclose($name_file);
+		?>
 		
 		
 	</head>
@@ -19,15 +28,7 @@
 	<body>
 	
 	
-	<?php 
-		#Hier Namen aus File holen und in array schreiben.
-		$names = array();
-		$name_file = fopen("namen.csv", "r") or die("Unable to open file!");
-		while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
-			array_push($names, $line[0]);
-		}		
-		fclose($name_file);
-		$data = $names#array(1 =>"Martl", 2=>"Diegl", 3=>"Boris"); ?>
+
 	
 	
 		<form method="post">
@@ -41,7 +42,7 @@
 			<tr>
 			<td><select name="name" id="name">
 			<?php
-				foreach($data as $key => $val){
+				foreach($names as $key => $val){
 					echo('<option value=' . $val . '>' . $val . '</option>');
 				}
 			?>
@@ -65,37 +66,31 @@
 					return $string;
 				}
 				
-				$myfile = fopen("stricherliste.csv", "r") or die("Unable to open file!");
-				$data = array();
-				while (($line = fgetcsv($myfile, 1000, ";")) !== FALSE) {
-					array_push($data, $line);
+				$bierliste = fopen("stricherliste.csv", "r") or die("Unable to open file!");
+				$bier_data = array();
+				while (($line = fgetcsv($bierliste, 1000, ";")) !== FALSE) {
+					array_push($bier_data, $line);
 					}
-				fclose($myfile);
+				fclose($bierliste);
 				
-				$myfile = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
-				$txt = strval($_POST["name"]) . ";Bier;" . strval($_POST["bier"]) . ";Toast;" . strval($_POST["toast"]) . "\n";
-				fwrite($myfile, convertToWindowsCharset($txt));
-				fclose($myfile);
+				#Write Logfile
+				$bierliste_log = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
+				$txt = strval($_POST["name"]) . ";" . strval($_POST["bier"]) . ";" . strval($_POST["toast"]) . "\n";
+				fwrite($bierliste_log, convertToWindowsCharset($txt));
+				fclose($bierliste_log);
 				
-				$liste = fopen("stricherliste.csv", "w") or die("Unable to open file!");
+				#Add new order to list
+				$bierliste = fopen("stricherliste.csv", "w") or die("Unable to open file!");
 				$header = array("Name", "Bier", "Toast");
-				#fputcsv($liste, $header, ";");
-				$name_flag = False;
-				foreach ($data as $element) {
+
+				foreach ($bier_data as $element) {
 					if($element[0] == $_POST["name"]){
-						$element[1] += intval($_POST["bier"]);
-						$element[2] += intval($_POST["toast"]);
-						$name_flag = True;
+						$element[1] = intval($element[1]) + intval($_POST["bier"]);
+						$element[2] = intval($element[2]) + intval($_POST["toast"]);
 					}
-
-					fputcsv($liste, $element, ";");
+					fputcsv($bierliste, $element, ";");
 				}
-				if($name_flag == False){
-					$new_name = array($_POST["name"], intval($_POST["bier"]), intval($_POST["toast"]));
-					fputcsv($liste, $new_name, ";");
-				}
-				fclose($liste);
-
+				fclose($bierliste);
 			}
 		?>
 		
