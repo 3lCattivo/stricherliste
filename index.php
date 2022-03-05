@@ -100,8 +100,10 @@
 					<td></td><td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
 					<td><input name="comment" type="text" maxlength="500" autocomplete="off"></td>
 				</tr>
+				<tr><td></td>
+				</tr>
 				<tr>
-					<td></td><td></td><td></td><td><button type="submit">Hinzufügen!</button> </td>
+					<td></td><td></td><td></td><td></td><td><button type="submit">Hinzufügen!</button> </td>
 				</tr>
 			</table> 
 		</form>
@@ -112,6 +114,7 @@
 
 		<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				
 				#Get data from list
 				$bierliste = fopen("barliste.csv", "r") or die("Unable to open file!");
 				$bier_data = array();
@@ -121,10 +124,14 @@
 				fclose($bierliste);
 				
 				#Write Logfile
-				#$bierliste_log = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
-				#$txt = strval($_POST["name"]) . ";" . strval($_POST["bier"]) . ";" . strval($_POST["toast"]) . "\n";
-				#fwrite($bierliste_log, convertToUTF8($txt));
-				#fclose($bierliste_log);
+				$bierliste_log = fopen("barliste_log.csv", "a") or die("Unable to open file!");
+				$txt = "";
+				foreach($menu as $key => $val){
+					$txt = $txt . str_replace("\n","",$val) . ";" . str_replace("\n","",$_POST["menu" . $key]) . ";";
+				}
+				$txt = $names[$_POST['name']] . ';' . $txt;
+			fwrite($bierliste_log, (convertToWindowsCharset($txt) . "\n"));
+				fclose($bierliste_log);
 				
 				#Add new order to list
 				$bierliste = fopen("barliste.csv", "w") or die("Unable to open file!");
