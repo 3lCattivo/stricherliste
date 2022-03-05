@@ -43,8 +43,6 @@
 				}
 			}		
 			fclose($name_file);
-			$numberOfRows = 6;
-			$numberOfColumns = ceil((count($menu) + 2) / $numberOfRows); # +2 because of comment and diverse
 		?>
 		
 		
@@ -53,56 +51,86 @@
 	<body>
 	
 		<form method="post">
-			<h1>Die Stricherliste</h1>
-			<table>
-				<tr>
-					<td><select name="name" id="name">
-					<?php
-						foreach($names as $key => $val){
-							echo('<option value=' . $key . '>' . $val . '</option>');
-						}
-					?>
-					</select></td>
-				</tr>
-					<?php
-						for($j = 0; $j < $numberOfColumns; $j++){
-							echo('<tr>');
-							echo('<th>Name</th>');
-							for($i = 0; $i <$numberOfRows; $i++){
-								echo('<th>' . $menu[$numberOfColumns * $j + $i] . '</th>');
-							}
-							echo('</tr><tr>');
-							echo('<th>Preise</th>');
-							for($i = 0; $i <$numberOfRows; $i++){
-								echo('<th>' . $prices[$numberOfColumns * $j + $i] . '</th>');	
-							}
-							echo('</tr><tr>');
-							echo('<th></th>');
-							for($i = 0; $i <$numberOfRows; $i++){
-								echo('<td><input name=' . 'menu'. ($numberOfColumns * $j + $i) . ' type="number" step="1" min="0", max="100" ></td>');		
-							}
-							echo('</tr>');
-						}
-					?>
-				<tr>
-				<td></td><th>Diverses</th><th>Kommentar</th>
-				</tr>
-				<tr>
-				<td></td><th>(in Euro)</th><th></th>
-				</tr>
-				<tr>
-					<td></td><td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
-					<td><input name="comment" type="text" maxlength="500" autocomplete="off"></td>
-				</tr>
-				<tr>
-					<td></td><td></td><td></td><td><button type="submit">Hinzufügen!</button> </td>
-				</tr>
-			</table> 
+		<h1>Die Stricherliste</h1>
+		<table>
+		
+			<tr>
+				<!-- Header -->
+				<th>Name</th>
+				<?php
+					for ($i = 0; $i <= 5 or $i > count($menu); $i++) {
+						#echo('<th>' . $menu[$key] . " " . $prices[$key] . '</th>');
+						echo('<th>' . $menu[$i] . '</th>');
+					}
+				?>
+			</tr>
+			
+			<tr>
+				<th>Preis</th>
+				<?php
+					for ($i = 0; $i <= 5 or $i > count($menu); $i++) {
+						echo('<th>' . $prices[$i] . '</th>');
+					}
+				?>				
+			</tr>
+			
+			<tr>
+				<!-- Inputs! -->
+				<td><select name="name" id="name">
+				<?php
+					foreach($names as $key => $val){
+						echo('<option value=' . $key . '>' . $val . '</option>');
+					}
+				?>
+				</select></td>
+				
+				<?php
+					for ($i = 0; $i <= 5 or $i > count($menu); $i++) {
+						echo('<td><input name=' . 'menu'. $i . ' type="number" step="1" min="0", max="100" ></td>');
+					}
+				?>
+			
+			<!-- 2. Runde: -->
+			<tr>
+				<!-- Header -->
+				<th>Name</th>
+				<?php
+					for ($i = 6; $i <= 10 or $i > count($menu); $i++) {
+						#echo('<th>' . $menu[$key] . " " . $prices[$key] . '</th>');
+						echo('<th>' . $menu[$i] . '</th>');
+					}
+				?>
+				<th>Diverses (in Euro)</th>
+				<th>Kommentar</th>
+			</tr>
+			</tr>
+			
+			<tr>
+				<th>Preis</th>
+				<?php
+					for ($i = 6; $i <= 10 or $i > count($menu); $i++) {
+						echo('<th>' . $prices[$i] . '</th>');
+					}
+				?>				
+			</tr>
+			
+			<tr>
+				<!-- Inputs! -->
+				<th></th>
+				<?php
+					for ($i = 6; $i <= 10 or $i > count($menu); $i++) {
+						echo('<td><input name=' . 'menu'. $i . ' type="number" step="1" min="0", max="100" ></td>');
+					}
+				?>
+				<td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
+
+				<td><input name="comment" type="text" maxlength="500" ></td>
+			</tr>
 		</form>
+		</table> 
 		
 		
-		
-		
+		<button type="submit">Hinzufügen!</button> 
 
 		<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
