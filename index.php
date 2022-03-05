@@ -75,22 +75,22 @@
 					?>
 			</tr>
 			<tr>
-			<td><select name="name" id="name">
-			<?php
-				foreach($names as $key => $val){
-					echo('<option value=' . $val . '>' . $val . '</option>');
-				}
-			?>
+				<td><select name="name" id="name">
+				<?php
+					foreach($names as $key => $val){
+						echo('<option value=' . $key . '>' . $val . '</option>');
+					}
+				?>
 
-			</select></td>
-			<?php
-				foreach($menu as $key => $val){
-					echo('<td><input name=' . 'menu'. $key . ' type="number"  step="1" min="0", max="100" ></td>');
-				}
-			?>
-			<td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
+				</select></td>
+				<?php
+					foreach($menu as $key => $val){
+						echo('<td><input name=' . 'menu'. $key . ' type="number" step="1" min="0", max="100" ></td>');
+					}
+				?>
+				<td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
 
-			<td><input name="comment" type="text" maxlength="100" ></td>
+				<td><input name="comment" type="text" maxlength="500" ></td>
 			</tr>
 		</form>
 		</table> 
@@ -100,7 +100,6 @@
 
 		<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-				
 				#Get data from list
 				$bierliste = fopen("barliste.csv", "r") or die("Unable to open file!");
 				$bier_data = array();
@@ -118,13 +117,12 @@
 				#Add new order to list
 				$bierliste = fopen("barliste.csv", "w") or die("Unable to open file!");
 				foreach ($bier_data as $element) {					
-					if($element[0] == strip_tags($_POST["name"])){
+					if($element[0] == $names[strip_tags($_POST["name"])]){
 						foreach ($menu as $key => $val){
 							$element[$key + 1] = intval($element[$key + 1]) + intval(strip_tags($_POST["menu" . $key]));
-							#$element[2] = intval($element[2]) + intval(strip_tags($_POST["toast"]));						
 						}
-						$element[$key + 2] = $element[$key + 1] + intval(strip_tags($_POST["diverse"]));
-						$element[$key + 3] = $element[$key + 2] . ";" . strip_tags($_POST["comment"]);
+						$element[$key + 2] = intval($element[$key + 2]) + intval(strip_tags($_POST["diverse"]));
+						$element[$key + 3] = $element[$key + 3] . ";" . strip_tags($_POST["comment"]);
 					}
 					fputcsv($bierliste, $element, ";");
 				}
