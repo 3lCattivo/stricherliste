@@ -26,11 +26,21 @@
 			$names = array();
 			$menu = array();
 			$prices = array();
-			$name_file = fopen("namen.csv", "r") or die("Unable to open file!");
+			$name_file = fopen("barliste_template.csv", "r") or die("Unable to open file!");
+			
+			#Get Menu
+			$line = fgetcsv($name_file, 1000, ";");
+			array_shift($line);
+			$menu = $line;
+			#Get Prices
+			$line = fgetcsv($name_file, 1000, ";");
+			array_shift($line);
+			$prices = $line;
+			
 			while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
-				array_push($names, convertToWindowsCharset($line[0]));
-				array_push($menu, convertToWindowsCharset($line[1]));
-				array_push($prices, convertToWindowsCharset($line[2]));
+				if($line[0] != ""){
+					array_push($names, convertToWindowsCharset($line[0]));
+				}
 			}		
 			fclose($name_file);
 		?>
@@ -48,10 +58,21 @@
 				<th>Name</th>
 				<?php
 					foreach($menu as $key => $val){
-						echo('<th>' . $menu[$key] . " " . $prices[$key] . '€' . '</th>');
+						#echo('<th>' . $menu[$key] . " " . $prices[$key] . '</th>');
+						echo('<th>' . $val . '</th>');
 					}
 				?>
+				<th>Diverses (in Euro)</th>
 				<th>Kommentar</th>
+			</tr>
+			<tr>
+				<th>Preis</th>
+					<?php
+						foreach($prices as $key => $val){
+							#echo('<th>' . $menu[$key] . " " . $prices[$key] . '</th>');
+							echo('<th>' . $val . '</th>');
+						}
+					?>
 			</tr>
 			<tr>
 			<td><select name="name" id="name">
@@ -67,7 +88,8 @@
 					echo('<td><input name=' . 'menu'. $key . ' type="number"  step="1" min="0", max="100" ></td>');
 				}
 			?>
-				
+			<td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
+
 			<td><input name="comment" type="text" maxlength="100" ></td>
 			</tr>
 		</form>
@@ -80,7 +102,7 @@
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				#Get data from list
-				$bierliste = fopen("stricherliste.csv", "r") or die("Unable to open file!");
+				$bierliste = fopen("barliste.csv", "r") or die("Unable to open file!");
 				$bier_data = array();
 				while (($line = fgetcsv($bierliste, 1000, ";")) !== FALSE) {
 					array_push($bier_data, $line);
@@ -94,16 +116,15 @@
 				#fclose($bierliste_log);
 				
 				#Add new order to list
-				$bierliste = fopen("stricherliste.csv", "w") or die("Unable to open file!");
-				#$header = array("Name", "Bier", "Toast");
-
-				foreach ($bier_data as $element) {
+				$bierliste = fopen("barliste.csv", "w") or die("Unable to open file!");
+				foreach ($bier_data as $element) {					
 					if($element[0] == strip_tags($_POST["name"])){
 						foreach ($menu as $key => $val){
-							$element[$key + 1] = intval($element[$key]) + intval(strip_tags($_POST["menu" . $key]));
+							$element[$key + 1] = intval($element[$key + 1]) + intval(strip_tags($_POST["menu" . $key]));
 							#$element[2] = intval($element[2]) + intval(strip_tags($_POST["toast"]));						
 						}
-						$element[7] = $element[7] . ";" . strip_tags($_POST["comment"]);
+						$element[$key + 2] = $element[$key + 1] + intval(strip_tags($_POST["diverse"]));
+						$element[$key + 3] = $element[$key + 2] . ";" . strip_tags($_POST["comment"]);
 					}
 					fputcsv($bierliste, $element, ";");
 				}
