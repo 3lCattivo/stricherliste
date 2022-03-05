@@ -15,11 +15,17 @@
 		<?php 
 			header('Content-type: text/html; charset=utf-8');
 			
-			function convertToWindowsCharset($string) {
+			function convertToUTF8($string) {
 				$charset =  mb_detect_encoding($string,"UTF-8, ISO-8859-1, ISO-8859-15",true);
 				$string =  mb_convert_encoding($string, "UTF-8", $charset);
 				return $string;
 			}
+			function convertToWindowsCharset($string) {
+				$charset =  mb_detect_encoding($string,"UTF-8, ISO-8859-1, ISO-8859-15",true);
+				$string =  mb_convert_encoding($string, "Windows-1252", $charset);
+				return $string;
+			}
+			
 			
 			
 			#Get Names, Menu and Prices from Array and write to csv
@@ -39,7 +45,7 @@
 			
 			while (($line = fgetcsv($name_file, 1000, ";")) !== FALSE) {
 				if($line[0] != ""){
-					array_push($names, convertToWindowsCharset($line[0]));
+					array_push($names, convertToUTF8($line[0]));
 				}
 			}		
 			fclose($name_file);
@@ -117,18 +123,18 @@
 				#Write Logfile
 				#$bierliste_log = fopen("stricherliste_log.csv", "a") or die("Unable to open file!");
 				#$txt = strval($_POST["name"]) . ";" . strval($_POST["bier"]) . ";" . strval($_POST["toast"]) . "\n";
-				#fwrite($bierliste_log, convertToWindowsCharset($txt));
+				#fwrite($bierliste_log, convertToUTF8($txt));
 				#fclose($bierliste_log);
 				
 				#Add new order to list
 				$bierliste = fopen("barliste.csv", "w") or die("Unable to open file!");
-				foreach ($bier_data as $element) {					
-					if($element[0] == $names[strip_tags($_POST["name"])]){
+				foreach ($bier_data as $element) {	
+					if(convertToUTF8($element[0]) == $names[strip_tags($_POST["name"])]){
 						foreach ($menu as $key => $val){
 							$element[$key + 1] = intval($element[$key + 1]) + intval(strip_tags($_POST["menu" . $key]));
 						}
 						$element[$key + 2] = intval($element[$key + 2]) + intval(strip_tags($_POST["diverse"]));
-						$element[$key + 3] = $element[$key + 3] . ";" . strip_tags($_POST["comment"]);
+						$element[$key + 3] = convertToWindowsCharset($element[$key + 3] . ";" . strip_tags($_POST["comment"]));
 					}
 					fputcsv($bierliste, $element, ";");
 				}

@@ -1,16 +1,16 @@
-BL14;"Krügerl
+;"Krügerl
 Bud/Zwickl
-Shot / Schnaps";"Krügerl
+";"Krügerl
 Hell";"Seidel
-Hell";"G´spritzte 1/2";"G´spritzte 1/3";"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Mannerschnitten";"Longdrink
+Hell";"G´spritzte 1/2";"G´spritzte 1/3";"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Manner";"Longdrink
 4cl Alk.";Diverses;Kommentar
 ;"€ 2,00";"€ 1,90";"€ 1,40";"€ 1,50";"€ 1,00";"€ 1,50";"€ 1,00";"€ 0,80";"€ 2,00";"€ 1,50";"€ 1,00";"€ 3,00";;
-Alfenus;15;0;0;0;0;0;0;0;0;0;0;0;10;";a;b;c;d;Hi"
+Alfenus;0;0;0;0;0;0;0;0;0;0;0;0;0;";1;öäüß;öü;ö"
 Alfons;;;;;;;;;;;;;;
-"Ali Baba";4;0;0;0;0;0;0;0;0;0;0;0;3;";Martin ist der Beste!"
-"All Black";1;0;0;0;0;0;0;0;0;0;0;0;0;";;"
+"Ali Baba";;;;;;;;;;;;;;
+"All Black";;;;;;;;;;;;;;
 "Amboss (S-B)";;;;;;;;;;;;;;
-"Ambrosius (S-B)";5;3;8;2;0;0;0;0;0;0;0;0;0;";Ahoi"
+"Ambrosius (S-B)";;;;;;;;;;;;;;
 AMS;;;;;;;;;;;;;;
 Andropov;;;;;;;;;;;;;;
 Archimedes;;;;;;;;;;;;;;
@@ -192,9 +192,3 @@ Wü;;;;;;;;;;;;;;
 Wusal;;;;;;;;;;;;;;
 XVI;;;;;;;;;;;;;;
 Zahltag;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;
-Fuxia;;;;;;;;;;;;;;
-Keilung;;;;;;;;;;;;;;
-"BaDi, BuPu";;;;;;;;;;;;;;
