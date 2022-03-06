@@ -25,7 +25,27 @@
 				$string =  mb_convert_encoding($string, "Windows-1252", $charset);
 				return $string;
 			}
+			function convertDecimalSeparator_PointToComma($string) {
+				$string = str_replace('.', ',', $string);
+				return $string;
+			}
+			function convertDecimalSeparator_CommaToPoint_StringToNumber($string) {
+				$string = str_replace(',', '.', $string);
+				$number= floatval($string);
+				return $number;
+			}
 			
+			#Get Filename
+			$filename = 'barliste_' . date('WY') . '.csv';
+			$filename_log = 'barliste_log_' . date('WY') . '.csv';
+			if(!file_exists($filename)){
+				$fp = fopen($filename, "w");
+				fclose($fp);
+			}
+			if(!file_exists($filename_log)){
+				$fp = fopen($filename_log, "w");
+				fclose($fp);
+			}
 			
 			
 			#Get Names, Menu and Prices from Array and write to csv
@@ -38,6 +58,7 @@
 			$line = fgetcsv($name_file, 1000, ";");
 			array_shift($line);
 			$menu = $line;
+
 			#Get Prices
 			$line = fgetcsv($name_file, 1000, ";");
 			array_shift($line);
@@ -49,8 +70,8 @@
 				}
 			}		
 			fclose($name_file);
-			$numberOfRows = 6;
-			$numberOfColumns = ceil((count($menu) + 2) / $numberOfRows); # +2 because of comment and diverse
+			$numberOfColumns = 6;
+			$numberOfRows = ceil((count($menu) + 2) / $numberOfColumns); # +2 because of comment and diverse
 		?>
 		
 		
@@ -71,20 +92,20 @@
 					</select></td>
 				</tr>
 					<?php
-						for($j = 0; $j < $numberOfColumns; $j++){
+						for($j = 0; $j < $numberOfRows; $j++){
 							echo('<tr>');
-							echo('<th>Name</th>');
-							for($i = 0; $i <$numberOfRows; $i++){
+							echo('<th></th>');
+							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu) ; $i++){
 								echo('<th>' . $menu[$numberOfColumns * $j + $i] . '</th>');
 							}
 							echo('</tr><tr>');
-							echo('<th>Preise</th>');
-							for($i = 0; $i <$numberOfRows; $i++){
+							echo('<th></th>');
+							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu); $i++){
 								echo('<th>' . $prices[$numberOfColumns * $j + $i] . '</th>');	
 							}
 							echo('</tr><tr>');
 							echo('<th></th>');
-							for($i = 0; $i <$numberOfRows; $i++){
+							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu); $i++){
 								echo('<td><input name=' . 'menu'. ($numberOfColumns * $j + $i) . ' type="number" step="1" min="0", max="100" ></td>');		
 							}
 							echo('</tr>');
@@ -97,7 +118,7 @@
 				<td></td><th>(in Euro)</th><th></th>
 				</tr>
 				<tr>
-					<td></td><td><input name="diverse" type="number" step="1" min="0"max="9999"></td>
+					<td></td><td><input name="diverse" type="number" min="0"max="9999" step=0.01></td>
 					<td><input name="comment" type="text" maxlength="500" autocomplete="off"></td>
 				</tr>
 				<tr><td></td>
@@ -114,9 +135,18 @@
 
 		<?php
 			if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+				$inp_menu = array();
+				for($i = 0; $i < count($menu); $i++){
+					$inp_menu[$i] = filter_input(INPUT_POST, 'menu' . $i, FILTER_SANITIZE_NUMBER_INT);
+				}
+				
+				$inp_name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_NUMBER_INT);
+				$inp_diverse = filter_input(INPUT_POST, 'diverse', FILTER_SANITIZE_STRING);
+				$inp_comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+				
 				
 				#Get data from list
-				$bierliste = fopen("barliste.csv", "r") or die("Unable to open file!");
+				$bierliste = fopen($filename, "r") or die("Unable to open file!");
 				$bier_data = array();
 				while (($line = fgetcsv($bierliste, 1000, ";")) !== FALSE) {
 					array_push($bier_data, $line);
@@ -124,26 +154,62 @@
 				fclose($bierliste);
 				
 				#Write Logfile
-				$bierliste_log = fopen("barliste_log.csv", "a") or die("Unable to open file!");
+				$bierliste_log = fopen($filename_log, "a") or die("Unable to open file!");
 				$txt = "";
 				foreach($menu as $key => $val){
-					$txt = $txt . str_replace("\n","",$val) . ";" . str_replace("\n","",$_POST["menu" . $key]) . ";";
+					$txt = $txt . str_replace("\n","",$val) . ";" . str_replace("\n","",$inp_menu[$key]) . ";";
 				}
-				$txt = $names[$_POST['name']] . ';' . $txt;
-			fwrite($bierliste_log, (convertToWindowsCharset($txt) . "\n"));
+				$txt =$txt . "Diverses;" . convertDecimalSeparator_PointToComma($inp_diverse) . ";";
+				$txt =$txt . "Kommentar;" . str_replace("\n","",strip_tags($inp_comment)) . ";";
+				$txt = $names[$inp_name] . ';' . $txt;
+				fwrite($bierliste_log, (convertToWindowsCharset($txt) . "\n"));
 				fclose($bierliste_log);
 				
+				
 				#Add new order to list
-				$bierliste = fopen("barliste.csv", "w") or die("Unable to open file!");
-				foreach ($bier_data as $element) {	
-					if(convertToUTF8($element[0]) == $names[strip_tags($_POST["name"])]){
+				
+				#Write Menu to barliste
+				$bierliste = fopen($filename, "w") or die("Unable to open file!");
+				$bier_data[0][0] = "Bierliste";
+				for($i = 0; $i < count($menu); $i++){
+					$bier_data[0][$i+1] = convertToWindowsCharset($menu[$i]);
+				}
+				$bier_data[0][$i +1] = convertToWindowsCharset("Diverses");
+				$bier_data[0][$i +2] = convertToWindowsCharset("Kommentar");
+				
+				#Write Names to barliste
+				for($i = 0; $i < count($names); $i++){
+					$bier_data[$i+1][0] = convertToWindowsCharset($names[$i]);
+				}
+
+				#Add order to barliste
+				for($i = 0; $i <= count($names); $i++){	
+					if(convertToUTF8($bier_data[$i][0]) == $names[$inp_name]){
 						foreach ($menu as $key => $val){
-							$element[$key + 1] = intval($element[$key + 1]) + intval(strip_tags($_POST["menu" . $key]));
+							if (array_key_exists($key + 1, $bier_data[$i])){
+								$bier_data[$i][$key + 1] = intval($bier_data[$i][$key + 1]) + intval($inp_menu[$key]);
+							}
+							else{
+								$bier_data[$i][$key + 1] = intval($inp_menu[$key]);
+							}
+							
 						}
-						$element[$key + 2] = intval($element[$key + 2]) + intval(strip_tags($_POST["diverse"]));
-						$element[$key + 3] = convertToWindowsCharset($element[$key + 3] . ";" . strip_tags($_POST["comment"]));
+						if (array_key_exists($key + 2, $bier_data[$i])){
+								$bier_data[$i][$key + 2] = convertDecimalSeparator_CommaToPoint_StringToNumber($bier_data[$i][$key + 2]) + floatval($inp_diverse);
+								$bier_data[$i][$key + 2] = convertDecimalSeparator_PointToComma($bier_data[$i][$key + 2]);
+							}
+							else{
+								$bier_data[$i][$key + 2] = floatval(strip_tags($inp_diverse));
+								$bier_data[$i][$key + 2] = convertDecimalSeparator_PointToComma($bier_data[$i][$key + 2]);
+							}
+						if (array_key_exists($key + 3, $bier_data[$i])){
+								$bier_data[$i][$key + 3] = convertToWindowsCharset($bier_data[$i][$key + 3] . ";" . $inp_comment);
+							}
+							else{
+								$bier_data[$i][$key + 3] = convertToWindowsCharset(strip_tags($_POST["comment"]));
+							}
 					}
-					fputcsv($bierliste, $element, ";");
+					fputcsv($bierliste, $bier_data[$i], ";");
 				}
 				fclose($bierliste);
 			}
