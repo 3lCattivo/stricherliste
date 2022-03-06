@@ -9,6 +9,7 @@
 		<title>NdW Stricherliste</title>
 
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
 		<!--So geht ein Kommentar-->
 		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
 		
@@ -81,13 +82,13 @@
 		
 	</head>
 
-	<body>
+	<body class="ndwbody">
 	
 		<form method="post">
 			<input type="hidden" id="name" name="name" value=<?php echo($inp_name_select);?>>
 			<input type="hidden" id="name_select" name="name_select" value=<?php echo($inp_name_select);?>>
 			<h1><?php echo($names[$inp_name_select]);?></h1>
-			<table>
+			<table class='table_order'>
 					<?php
 						for($j = 0; $j < $numberOfRows; $j++){
 							echo('<tr>');

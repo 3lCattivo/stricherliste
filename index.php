@@ -7,8 +7,8 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width">
 
 		<title>NdW Stricherliste</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" >
 
-		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<!--So geht ein Kommentar-->
 		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
 		
@@ -42,6 +42,9 @@
 				}
 			}		
 			fclose($name_file);
+			
+			$numberOfColumns = 6;
+			$numberOfRows = ceil(count($names) / $numberOfColumns);
 		?>
 			
 			
@@ -51,22 +54,21 @@
 	</head>
 
 	<body>
-	
+		<h1>Die Stricherliste</h1>
 		<form method="post" action="order.php">
-			<h1>Die Stricherliste</h1>
 			<table>
-				<tr>
-					<td><select name="name_select" id="name_select">
-						<?php
-							foreach($names as $key => $val){
-								echo('<option value=' . $key . '>' . $val . '</option>');
-							}
-						?>
-					</select></td>
-					<td><button type="submit">Hinzufügen!</button> </td>
-				</tr>
+				<?php
+					for($j = 0; $j < $numberOfRows; $j++){	
+						echo('<tr>');
+						for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($names) ; $i++){
+							echo('<td><button class="button" type="submit" name="name_select" value=' . $numberOfColumns * $j + $i . '>' . $names[$numberOfColumns * $j + $i] . '</button></td>');
+						}
+						echo('</tr>');
+					}	
+				?>
 			</table> 
 		</form>
+
 	</body>
 
 </html>
