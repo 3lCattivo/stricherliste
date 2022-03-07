@@ -1,16 +1,14 @@
-Bierliste;"Krügerl
-Bud/Zwickl
-";"Krügerl
-Hell";Orangensafz;"G´spritzte 1/2";"G´spritzte 1/3";"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Manner";Schweinsbraten;Taranteln;Diverses;Kommentar
-Alfenus;1;0;0;0;0;0;0;0;0;0;0;0;0;0;";"
-Alfons
-"Ali Baba"
-"All Black";15;8;0;0;0;0;0;5;0;0;0;0;5;0,09;";;;;lksjdflk"
+Bierliste;Kaffee;WodiOHHH;Gpritzt;Seidl;Safz;"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Mannerschnitten";"Longdrink
+4cl Alk.";Diverses;Kommentar;Kommentar
+Alfenus
+Alfons;0;0;4;0;0;0;0;0;0;0;0;0;0;0;
+"Ali Baba";0;0;0;0;0;0;0;0;0;0;0;0;0;";öööööööööööööö"
+"All Black";0;8;0;0;0;0;0;0;0;0;0;0;0;
 "Amboss (S-B)"
 "Ambrosius (S-B)"
 AMS
 Andropov
-Archimedes
+Archimedes;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
 Ares
 "Armand Cernak"
 Armin
@@ -85,7 +83,7 @@ Jedermann
 "John Deere"
 Johnnie
 Kaffeemaschine
-Käsekrainer
+Käsekrainer;0;0;0;0;1;0;0;0;1;0;0;7;5;"fürdie fuxia"
 Kilian
 Königstiger
 Kracherl
@@ -107,7 +105,7 @@ Merkur
 "Merkur (A-S)"
 Mike
 Mischmasch
-Möbius
+Möbius;8;2;0;0;0;0;2;0;0;0;0;0;0;7,55;"Ich habe bier getrunken;"
 "Mr. Burns"
 "Nordhoff "
 "Nr 2"
@@ -188,7 +186,7 @@ Winchester
 Wü
 Wusal
 XVI
-Zahltag
+Zahltag;0;0;0;0;0;0;0;0;0;0;0;0;0;
 Fuxia
 Keilung
 "BaDi, BuPu"
