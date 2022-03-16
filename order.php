@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 
 		<!--So geht ein Kommentar-->
-		<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script> -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 		
 		<?php 
 			header('Content-type: text/html; charset=utf-8');
@@ -83,7 +83,7 @@
 	</head>
 
 	<body class="ndwbody">
-	
+		<!-- Menu List -->
 		<form method="post">
 			<input type="hidden" id="name" name="name" value=<?php echo($inp_name_select);?>>
 			<input type="hidden" id="name_select" name="name_select" value=<?php echo($inp_name_select);?>>
@@ -93,18 +93,8 @@
 						for($j = 0; $j < $numberOfRows; $j++){
 							echo('<tr>');
 							echo('<th></th>');
-							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu) ; $i++){
-								echo('<th>' . $menu[$numberOfColumns * $j + $i] . '</th>');
-							}
-							echo('</tr><tr>');
-							echo('<th></th>');
 							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu); $i++){
-								echo('<th>' . $prices[$numberOfColumns * $j + $i] . '</th>');	
-							}
-							echo('</tr><tr>');
-							echo('<th></th>');
-							for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($menu); $i++){
-								echo('<td><input name=' . 'menu'. ($numberOfColumns * $j + $i) . ' type="number" step="1" min="0", max="100" ></td>');		
+								echo('<td><button class="button_menu" type="button" name="choose_order" onclick=addListItem(' . $numberOfColumns * $j + $i . ')>' . $menu[$numberOfColumns * $j + $i] . '<br>' . $prices[$numberOfColumns * $j + $i] . '</button></td>');
 							}
 							echo('</tr>');
 						}
@@ -116,31 +106,39 @@
 				<td></td><th>(in Euro)</th><th></th>
 				</tr>
 				<tr>
-					<td></td><td><input name="diverse" type="number" min="0"max="9999" step=0.01></td>
-					<td><input name="comment" type="text" maxlength="500" autocomplete="off"></td>
+					<td></td><td><input id="get_diverse" name="get_diverse" type="number" min="0"max="9999" step=0.01></td>
+					<td><input id="get_comment" name="get_comment" type="text" maxlength="500" autocomplete="off"></td>
 				</tr>
 				<tr><td></td>
 				</tr>
 				<tr>
-					<td></td><td></td><td></td><td></td><td><button type="submit">Hinzufügen!</button> </td>
 				</tr>
 			</table> 
 		</form>
 		
-		
-		
-		
 
+		
 		<?php
 			if ($inp_name_set){
+				
 				$inp_menu = array();
 				for($i = 0; $i < count($menu); $i++){
-					$inp_menu[$i] = filter_input(INPUT_POST, 'menu' . $i, FILTER_SANITIZE_NUMBER_INT);
+					if (array_key_exists('menu'.$i, $_POST)){
+						$inp_menu[$i] = filter_input(INPUT_POST, 'menu'.$i, FILTER_SANITIZE_NUMBER_INT);
+					}
+					else{
+						$inp_menu[$i] = 0;
+					}
 				}
 				$inp_name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_NUMBER_INT);
 				$inp_diverse = filter_input(INPUT_POST, 'diverse', FILTER_SANITIZE_STRING);
 				$inp_comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
 				
+				
+				//echo("<p>" .count($inp_menu). "</p>");
+				//foreach($menu as $key => $val){
+				//	echo("<p>" .$inp_menu[$key]. "</p>");
+				//}
 				
 				#Get data from list
 				$bierliste = fopen($filename, "r") or die("Unable to open file!");
@@ -151,7 +149,6 @@
 				fclose($bierliste);
 				
 				#Write Logfile
-				echo("hier");
 				$bierliste_log = fopen($filename_log, "a") or die("Unable to open file!");
 				$txt = "";
 				foreach($menu as $key => $val){
@@ -215,6 +212,115 @@
 			}
 		?>
 		
+		
+		<!-- Table Monitor -->
+		<form method="post">
+			<input type="hidden" id="comment" name="comment" value = "">
+			<input type="hidden" id="diverse" name="diverse" value = "0">
+			<input type="hidden" id="name" name="name" value=<?php echo($inp_name_select)?>>
+			<input type="hidden" id="name_select" name="name_select" value=<?php echo($inp_name_select);?>>
+			<table class="tableMonitor" id="table">
+				<tr class = "trOrder">
+					<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
+				</tr>
+				<tr class ="trOrder">
+					<td class="cell">Kommentar:</td><td class="cell" id= "td_comment"><td class="close"><button type='button' onClick="resetComment()">&times</button></td>
+				</tr>
+
+			</table>
+			<button type=submit>Gogogo</button>
+		</form>
+
+		
+		
+		<script>
+		/* Get all elements with class="close" */
+
+		var js_menu = <?php echo json_encode($menu)?>;
+		var js_prices = <?php echo json_encode($prices)?>;
+		var itemArray = [];
+		var closebtns;
+		
+		
+		function addListItem(element) {
+			var table = document.getElementById("table");
+			if (!itemArray.includes(element)){
+				var row = table.insertRow(-1);
+				row.className = 'trOrder';
+				var cell0 = row.insertCell(0);
+				var cell1 = row.insertCell(1);
+				var cell2 = row.insertCell(2);
+				var cell3 = row.insertCell(3);
+				
+				cell0.innerHTML = js_menu[element];
+				cell1.innerHTML = "1";
+				cell2.innerHTML = "&times"; 
+				cell3.innerHTML = '<input type="hidden" id=amount' + element + ' name=menu' + element + ' value=1>';
+				cell0.className = 'cell';
+				cell1.className = 'cell';
+				cell2.className = 'close';
+				cell3.className = 'cell';
+				cell2.id = element;
+				itemArray.push(element);
+				closebtns = document.getElementById(element);
+				closebtns.addEventListener("click", closeButton);
+			}
+			else{
+				var table = document.getElementById('table');
+				for (var r = 0, n = table.rows.length; r < n; r++) {
+					if(table.rows[r].cells[0].innerHTML == js_menu[element]){
+						table.rows[r].cells[1].innerHTML = parseInt(table.rows[r].cells[1].innerHTML) + 1;
+						document.getElementById("amount"+ element).value = parseInt(document.getElementById("amount" + element).value) + 1;
+					}
+				}
+			}
+		}
+		
+		
+		function closeButton() {
+			var amount = this.parentNode.childNodes[1].innerHTML;
+			if (amount > 1){
+				this.parentNode.childNodes[1].innerHTML = parseInt(this.parentNode.childNodes[1].innerHTML) - 1;
+				this.parentNode.childNodes[3].childNodes[0].value = this.parentNode.childNodes[3].childNodes[0].value - 1;
+
+			}
+			else {
+				this.parentNode.remove();
+				var index = itemArray.indexOf(parseInt(this.id));
+				if (index != -1) {
+					itemArray.splice(index, 1);
+				}
+			}
+		}
+		
+		//Add Diverse and Comment to Monitor table
+		document.getElementById("get_diverse").addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				document.getElementById("td_diverse").innerHTML = document.getElementById("get_diverse").value;
+				document.getElementById("diverse").value = document.getElementById("get_diverse").value;
+			}
+		 });
+		 document.getElementById("get_comment").addEventListener("keyup", function(event) {
+			if (event.key === "Enter") {
+				document.getElementById("td_comment").innerHTML = document.getElementById("get_comment").value;
+				document.getElementById("comment").value = document.getElementById("get_comment").value;
+			}
+		 });
+		 
+		 
+		 
+		 
+		 function resetDiverse(){
+				document.getElementById('td_diverse').innerHTML = '';
+				document.getElementById('diverse').innerHTML = 0;
+			}
+		function resetComment(){
+				document.getElementById('td_comment').innerHTML = '';
+				document.getElementById('comment').innerHTML = 0;
+			}
+		 
+		
+		</script>
 	</body>
 
 </html>

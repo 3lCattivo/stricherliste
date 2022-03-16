@@ -1,18 +1,18 @@
 Bierliste;Kaffee;WodiOHHH;Gpritzt;Seidl;Safz;"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Mannerschnitten";"Longdrink
-4cl Alk.";Diverses;Kommentar;Kommentar
-Alfenus
-Alfons;0;0;4;0;0;0;0;0;0;0;0;0;0;0;
-"Ali Baba";0;0;0;0;0;0;0;0;0;0;0;0;0;";öööööööööööööö"
-"All Black";0;8;0;0;0;0;0;0;0;0;0;0;0;
-"Amboss (S-B)"
+4cl Alk.";Diverses;Kommentar
+Alfenus;3;3;3;3;3;3;3;3;3;3;3;3;0;";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+Alfons;37;11;34;11;2;2;17;7;2;5;2;2;110;"RubelRUbeöRubel;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+"Ali Baba";41;24;3;17;1;1;13;4;1;11;1;1;87;";;;;;;;;;;;;;;;Jetzt gilts;;Hallo?;;;lökl"
+"All Black";1;6;5;1;1;1;1;1;1;1;1;1;0;";;"
+"Amboss (S-B)";0;2;0;4;0;0;0;0;0;0;6;0;0;
 "Ambrosius (S-B)"
-AMS
-Andropov
-Archimedes;0;0;0;0;0;0;0;0;0;0;0;0;0;0;
+AMS;0;0;0;0;0;0;0;0;0;0;0;0;0;";"
+Andropov;0;0;0;0;0;0;34;34;0;0;0;0;0,12;";;;;;;;;;;;;;;;;;;;;;;;"
+Archimedes;4;4;4;4;4;4;4;4;4;4;4;4;0;";;;;"
 Ares
 "Armand Cernak"
 Armin
-Arn
+Arn;0;0;0;0;0;0;0;0;0;0;0;0;0;";;"
 Artos
 Artus
 Asparagus
@@ -25,7 +25,7 @@ Bierbaron
 Blanc
 Borussia
 Brenneke
-Bunsenbrenner
+Bunsenbrenner;0;1;2;3;0;0;4;5;0;0;0;0;5;7
 Bürgermeister
 "Calimero (Dan)"
 Capelucci
@@ -83,7 +83,7 @@ Jedermann
 "John Deere"
 Johnnie
 Kaffeemaschine
-Käsekrainer;0;0;0;0;1;0;0;0;1;0;0;7;5;"fürdie fuxia"
+Käsekrainer
 Kilian
 Königstiger
 Kracherl
@@ -105,7 +105,7 @@ Merkur
 "Merkur (A-S)"
 Mike
 Mischmasch
-Möbius;8;2;0;0;0;0;2;0;0;0;0;0;0;7,55;"Ich habe bier getrunken;"
+Möbius
 "Mr. Burns"
 "Nordhoff "
 "Nr 2"
@@ -186,7 +186,7 @@ Winchester
 Wü
 Wusal
 XVI
-Zahltag;0;0;0;0;0;0;0;0;0;0;0;0;0;
+Zahltag
 Fuxia
 Keilung
 "BaDi, BuPu"

@@ -10,7 +10,7 @@ p  {
 }
 
 .button {
-	background-color: #8A2BE2; /* Violett */
+	background-color: #000000; /*#8A2BE2; Violett */
 	border: none;
 	color: white;
 	height: 50px;
@@ -27,12 +27,75 @@ p  {
 	  color: #000000;
       transition: 0.3s;
   }
+  
+.button_menu {
+	background-color: #000000; /*#8A2BE2; Violett */
+	border: none;
+	color: white;
+	height: 50px;
+	width: 200px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 10px;
+}  
+
+.button_menu:hover {
+      background-color:#FFD700;
+	  color: #000000;
+      transition: 0.3s;
+  }
+  
 .ndwbody {
 	background-image: url('img_ndw.png');
 }
+
 .table_order {
 	padding-left: 150px;
 }
 
 
+.tableMonitor {
+  padding: 0;
+  margin: 0;
+  overflow: scroll;
+}
 
+/* Style the list items */
+.trOrder {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+  position: relative;
+  width: 800px;
+}
+
+.cell {
+  font-size: 18px;
+  position: relative;
+  width: 200px;
+  text-align: middle;
+}
+
+/* Add a light grey background color on hover */
+.trOrder:hover {
+  background-color: #eee;
+}
+
+/* Style the close button (span) */
+.close {
+  cursor: pointer;
+  background-color: #f6f6f6;
+  text-align: middle;
+  
+  width: 20px;
+  /*background-image: url('cross.png');*/
+}
+
+.close:hover {background-color: #eee;}
