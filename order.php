@@ -135,7 +135,7 @@
 				$inp_comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
 				
 				
-				//echo("<p>" .count($inp_menu). "</p>");
+				
 				//foreach($menu as $key => $val){
 				//	echo("<p>" .$inp_menu[$key]. "</p>");
 				//}
@@ -220,13 +220,22 @@
 			<input type="hidden" id="name" name="name" value=<?php echo($inp_name_select)?>>
 			<input type="hidden" id="name_select" name="name_select" value=<?php echo($inp_name_select);?>>
 			<table class="tableMonitor" id="table">
-				<tr class = "trOrder">
-					<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
-				</tr>
-				<tr class ="trOrder">
-					<td class="cell">Kommentar:</td><td class="cell" id= "td_comment"><td class="close"><button type='button' onClick="resetComment()">&times</button></td>
-				</tr>
-
+			
+				<!--<col width="200px" />
+				<col width="250px" />
+				<col width="50px" />
+				<col width="0px" />
+				<col width="0px" />-->
+			
+				<tbody id="tbody_monitor">
+			
+					<tr class = "trOrder">
+						<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
+					</tr>
+					<tr class ="trOrder">
+						<td class="cell">Kommentar:</td><td id= "td_comment"><td class="close"><button type='button' onClick="resetComment()">&times</button></td>
+					</tr>
+				</tbody>
 			</table>
 			<button type=submit>Gogogo</button>
 		</form>
@@ -251,10 +260,11 @@
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(2);
 				var cell3 = row.insertCell(3);
+				var cell4 = row.insertCell(4);
 				
 				cell0.innerHTML = js_menu[element];
 				cell1.innerHTML = "1";
-				cell2.innerHTML = "&times"; 
+				cell2.innerHTML = '<button type="button" >&times</button>'; 
 				cell3.innerHTML = '<input type="hidden" id=amount' + element + ' name=menu' + element + ' value=1>';
 				cell0.className = 'cell';
 				cell1.className = 'cell';
@@ -306,8 +316,6 @@
 				document.getElementById("comment").value = document.getElementById("get_comment").value;
 			}
 		 });
-		 
-		 
 		 
 		 
 		 function resetDiverse(){

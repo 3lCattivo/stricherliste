@@ -54,38 +54,48 @@ p  {
 .table_order {
 	padding-left: 150px;
 }
-
+#tbody_monitor{
+	display:block;
+	overflow:auto;
+	height:300px;
+	width:700px;
+}
 
 .tableMonitor {
   padding: 0;
   margin: 0;
   overflow: scroll;
+  width: 700px;
+  table-layout: fixed;
+  background-color: #f6f6f6;
 }
 
 /* Style the list items */
 .trOrder {
   border: 1px solid #ddd;
   margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6;
-  padding: 5px;
+  /*background-color: #f6f6f6;*/
+  padding: 5px; 
   text-decoration: none;
   font-size: 18px;
   color: black;
-  display: block;
+  /*display: block;*/
   position: relative;
-  width: 800px;
-}
-
-.cell {
-  font-size: 18px;
-  position: relative;
-  width: 200px;
-  text-align: middle;
 }
 
 /* Add a light grey background color on hover */
 .trOrder:hover {
   background-color: #eee;
+}
+
+.cell {
+  font-size: 18px;
+  position: relative;
+  /*width: 200px;*/
+  text-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Style the close button (span) */
@@ -94,8 +104,21 @@ p  {
   background-color: #f6f6f6;
   text-align: middle;
   
-  width: 20px;
+  /*width: 20px;*/
   /*background-image: url('cross.png');*/
 }
 
 .close:hover {background-color: #eee;}
+
+#td_comment {
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+
+#tbody_monitor tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* even columns width , fix width of table too*/
+}
