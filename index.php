@@ -42,9 +42,27 @@
 				}
 			}		
 			fclose($name_file);
+		
+		
+			#Get HOTList
+			$hotlist_name = array();
+			$hotlist_number = array();
+			$hotlist_file = fopen("hotlist.csv", "r") or die("Unable to open file!");
+			fgetcsv($hotlist_file, 1000, ";");         #Header
+			while (($line = fgetcsv($hotlist_file, 1000, ";")) !== FALSE) {
+				array_push($hotlist_name, convertToUTF8($line[0]));
+			}		
+			fclose($hotlist_file);
 			
 			$numberOfColumns = 6;
 			$numberOfRows = ceil(count($names) / $numberOfColumns);
+			$numberOfHotlistRows = ceil(count($hotlist_name) / $numberOfColumns);
+			
+			for ($i = 0; $i < count($hotlist_name); $i++){
+				array_push( $hotlist_number, array_search($hotlist_name[$i], $names));
+			}
+			array_multisort($hotlist_name, $hotlist_number);
+			
 		?>
 			
 			
@@ -54,7 +72,37 @@
 	</head>
 
 	<body>
+		<!-- SuchFeld -->
+		<!-- php write to csv latest customers? -->
+		<h1>Die HOTList<h1>
+		
+		<table>
+			<form method="post" action="order.php">
+				<tr><td> <select name="name_select" id="dropdown_names">
+				<?php 
+					for($j = 0; $j < count($names); $j++){	
+						echo('<option value=' . $j . '>' . $names[$j] . '</option>');
+					}
+				?>
+				</select></td>
+				</td><td><input type="submit" value="Submit"></td>
+				</tr>
+			</form>
+			<form method="post" action="order.php">
+				<?php
+					for($j = 0; $j < $numberOfHotlistRows; $j++){	
+						echo('<tr>');
+						for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($hotlist_name) ; $i++){
+							echo('<td><button class="button" type="submit" name="name_select" value=' . $hotlist_number[$numberOfColumns * $j + $i] . '>' . $hotlist_name[$numberOfColumns * $j + $i] . '</button></td>');
+						}
+						echo('</tr>');
+					}	
+				?>
+			</form>
+		</table> 
+<!--		
 		<h1>Die Stricherliste</h1>
+		
 		<form method="post" action="order.php">
 			<table>
 				<?php
@@ -68,7 +116,7 @@
 				?>
 			</table> 
 		</form>
-
+-->
 	</body>
 
 </html>

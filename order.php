@@ -72,11 +72,35 @@
 				}
 			}		
 			fclose($name_file);
-			$numberOfColumns = 6;
+			$numberOfColumns = 5;
 			$numberOfRows = ceil((count($menu) + 2) / $numberOfColumns); # +2 because of comment and diverse
 			
 			$inp_name_select = filter_input(INPUT_POST, 'name_select', FILTER_SANITIZE_NUMBER_INT);
 			$inp_name_set = array_key_exists('name', $_POST);
+			
+			
+			#Update HotList
+			$hotlist_name = array();
+			$hotlist_file = fopen("hotlist.csv", "r") or die("Unable to open file!");
+			fgetcsv($hotlist_file, 1000, ";");         #Header
+			while (($line = fgetcsv($hotlist_file, 1000, ";")) !== FALSE) {
+				array_push($hotlist_name, convertToUTF8($line[0]));
+			}		
+			fclose($hotlist_file);
+			if(in_array($names[$inp_name_select], $hotlist_name)){
+				array_splice($hotlist_name, array_search($names[$inp_name_select], $hotlist_name), 1); #remove name from list
+			}
+			else{
+				array_pop($hotlist_name); # remove last name
+			}
+			array_unshift($hotlist_name,$names[$inp_name_select]); #put name in front
+			#write names to hotlist file
+			$hotlist_file = fopen("hotlist.csv", "w") or die("Unable to open file!");
+			fputcsv($hotlist_file, ["Hotlist Name"]);
+			for ($i=0; $i<count($hotlist_name); $i++){
+				fputcsv($hotlist_file, [$hotlist_name[$i]]);
+			}		
+			fclose($hotlist_file);
 		?>
 		
 		

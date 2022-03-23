@@ -1,6 +1,11 @@
 HotList: ca. 30 Personen
+--> Einfach die letzten 30 Personen aufnehmen (Unabhängig von Konsum)
 Such Button: verlinkt auf alle
+Kommentar / Diverses Button (Tablet!)
+Zurück-Button für Mobile
 Beide alphabetisch
+Bundesbrüder aus Hauptexcel
+Temporäre Namen anlegen (Bsp. Verbindung zu Gast)
 
 Server architektur? Dimi? Wo liegen dateien? Wie sind die geschützt?
 
@@ -13,3 +18,9 @@ Wo tablett plazieren? Wie fixieren? Diegus. Unter Nepl. Holzkonstruktion? Mulati
 Boris: Budget für Tablett!!(Tablett Cola Bacardi?);
 
 Dann fertig!
+
+ID System für die Items-> Es sollte eine Mapping Tabelle (ID, Name). Aus dieser werden die Items auf der Webseite geladen. Diese ID gibt die Spalte in der BL LIste an. Modifizierungen sind nur beschränkt möglich.
+
+Listen direkt ins Excel als Tabellenblatt bzw. einlesen
+
+ATF: Hinzfügen im Template, aktivieren / deaktiveren von Items via 1/0 in Zeile 
