@@ -75,7 +75,13 @@
 			$numberOfColumns = 5;
 			$numberOfRows = ceil((count($menu) + 2) / $numberOfColumns); # +2 because of comment and diverse
 			
-			$inp_name_select = filter_input(INPUT_POST, 'name_select', FILTER_SANITIZE_NUMBER_INT);
+			if ( isset($_POST["names_autocomplete"])) {
+				$inp_name_select = filter_input(INPUT_POST, 'names_autocomplete', FILTER_SANITIZE_STRING);
+				$inp_name_select = array_search($inp_name_select, $names);
+			}
+			else {
+				$inp_name_select = filter_input(INPUT_POST, 'name_select', FILTER_SANITIZE_NUMBER_INT);
+			}
 			$inp_name_set = array_key_exists('name', $_POST);
 			
 			
@@ -98,7 +104,7 @@
 			$hotlist_file = fopen("hotlist.csv", "w") or die("Unable to open file!");
 			fputcsv($hotlist_file, ["Hotlist Name"]);
 			for ($i=0; $i<count($hotlist_name); $i++){
-				fputcsv($hotlist_file, [$hotlist_name[$i]]);
+				fputcsv($hotlist_file, [convertToWindowsCharset($hotlist_name[$i])]);
 			}		
 			fclose($hotlist_file);
 		?>
@@ -123,20 +129,7 @@
 							echo('</tr>');
 						}
 					?>
-				<tr>
-				<td></td><th>Diverses</th><th>Kommentar</th>
-				</tr>
-				<tr>
-				<td></td><th>(in Euro)</th><th></th>
-				</tr>
-				<tr>
-					<td></td><td><input id="get_diverse" name="get_diverse" type="number" min="0"max="9999" step=0.01></td>
-					<td><input id="get_comment" name="get_comment" type="text" maxlength="500" autocomplete="off"></td>
-				</tr>
-				<tr><td></td>
-				</tr>
-				<tr>
-				</tr>
+				
 			</table> 
 		</form>
 		
@@ -243,25 +236,46 @@
 			<input type="hidden" id="diverse" name="diverse" value = "0">
 			<input type="hidden" id="name" name="name" value=<?php echo($inp_name_select)?>>
 			<input type="hidden" id="name_select" name="name_select" value=<?php echo($inp_name_select);?>>
-			<table class="tableMonitor" id="table">
-			
-				<!--<col width="200px" />
-				<col width="250px" />
-				<col width="50px" />
-				<col width="0px" />
-				<col width="0px" />-->
-			
-				<tbody id="tbody_monitor">
-			
-					<tr class = "trOrder">
-						<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
-					</tr>
-					<tr class ="trOrder">
-						<td class="cell">Kommentar:</td><td id= "td_comment"><td class="close"><button type='button' onClick="resetComment()">&times</button></td>
-					</tr>
-				</tbody>
+			<table>
+				<tr>
+					<td class="send_button_column">
+						<button class="send_button" type=submit>Gogogo</button>
+					</td>
+				
+					<td>
+						<table class="tableMonitor" id="table">
+						
+							<!--<col width="200px" />
+							<col width="250px" />
+							<col width="50px" />
+							<col width="0px" />
+							<col width="0px" />-->
+						
+							<tbody id="tbody_monitor">
+						
+								<tr class = "trOrder">
+									<th>Diverses</th><th>Kommentar</th>
+								</tr>
+								<tr class = "trOrder">
+									<th>(in Euro)</th><th></th>
+								</tr>
+								<tr class = "trOrder">
+									<td class="cell" align="center"><input id="get_diverse" name="get_diverse" type="number" min="0"max="9999" step=0.01></td>
+									<td class="cell" align="center"><input id="get_comment" name="get_comment" type="text" maxlength="500" autocomplete="off"></td>
+								</tr>
+								<tr class = "trOrder">
+									<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"></td><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
+								</tr>
+								<tr class ="trOrder">
+									<td class="cell">Kommentar:</td><td id= "td_comment"></td><td class="close"><button type='button' onClick="resetComment()">&times</button></td>
+								</tr>
+							</tbody>
+					</table>
+					</td>
+				</tr>
 			</table>
-			<button type=submit>Gogogo</button>
+			
+			
 		</form>
 
 		

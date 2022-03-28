@@ -93,7 +93,7 @@
 				  b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
 				  b.innerHTML += arr[i].substr(val.length);
 				  /*insert a input field that will hold the current array item's value:*/
-				  b.innerHTML += "<input type='hidden' name='name_select' value='" + i + "'>";
+				  b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
 				  /*execute a function when someone clicks on the item value (DIV element):*/
 					  b.addEventListener("click", function(e) {
 					  /*insert the value for the autocomplete text field:*/
@@ -175,7 +175,7 @@
 			<form method="post" action="hi.php" autocomplete="off">
 				<tr>
 					<td ><div class="autocomplete">
-						<input id="names_autocomplete" type="text" name="name_select" placeholder="Name">
+						<input id="names_autocomplete" type="text" name="names_autocomplete" placeholder="Name">
 						</div>
 					</td>
 					<td>
@@ -195,7 +195,7 @@
 			<form method="post" action="order.php">
 				<?php
 					for($j = 0; $j < $numberOfHotlistRows; $j++){	
-						echo('<tr>');
+						echo('<tr class="hotlist">');
 						for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($hotlist_name) ; $i++){
 							echo('<td><button class="button" type="submit" name="name_select" value=' . $hotlist_number[$numberOfColumns * $j + $i] . '>' . $hotlist_name[$numberOfColumns * $j + $i] . '</button></td>');
 						}

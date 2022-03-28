@@ -172,10 +172,10 @@
 		<h1>Die HOTList</h1>
 		
 		<table>
-			<form method="post" action="hi.php" autocomplete="off">
+			<form method="post" action="order.php" autocomplete="off">
 				<tr>
 					<td ><div class="autocomplete">
-						<input id="names_autocomplete" type="text" name="name_select" placeholder="Name">
+						<input id="names_autocomplete" type="text" name="names_autocomplete" placeholder="Name">
 						</div>
 					</td>
 					<td>
@@ -195,7 +195,7 @@
 			<form method="post" action="order.php">
 				<?php
 					for($j = 0; $j < $numberOfHotlistRows; $j++){	
-						echo('<tr>');
+						echo('<tr class="hotlist">');
 						for($i = 0; $i <$numberOfColumns and ($numberOfColumns*$j+$i) < count($hotlist_name) ; $i++){
 							echo('<td><button class="button" type="submit" name="name_select" value=' . $hotlist_number[$numberOfColumns * $j + $i] . '>' . $hotlist_name[$numberOfColumns * $j + $i] . '</button></td>');
 						}

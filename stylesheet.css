@@ -10,6 +10,10 @@ p  {
 }
 
 tr {
+	height: 32px;
+}
+
+.hotlist {
 	height: 80px;
 }
 
@@ -61,7 +65,7 @@ tr {
 #tbody_monitor{
 	display:block;
 	overflow:auto;
-	height:300px;
+	height:1000px;
 	width:700px;
 }
 
@@ -162,3 +166,13 @@ Autocomplete!!
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.send_button{
+	padding: 30px 100px;
+	font-size:32px;
+}
+
+.send_button_column{
+	vertical-align: top;
+}
+	
