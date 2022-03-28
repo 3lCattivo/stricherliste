@@ -129,6 +129,19 @@
 							echo('</tr>');
 						}
 					?>
+			<tr class = "trOrder">
+				<th></th>
+				<th>Diverses</th><th>Kommentar</th>
+			</tr>
+			<tr class = "trOrder">
+				<th></th>
+				<th>(in Euro)</th><th></th>
+			</tr>
+			<tr class = "trOrder">
+				<td></td>
+				<td class="cell" align="center"><input id="get_diverse" name="get_diverse" type="number" min="0"max="9999" step=0.01></td>
+				<td class="cell" align="center"><input id="get_comment" name="get_comment" type="text" maxlength="500" autocomplete="off"></td>
+			</tr>
 				
 			</table> 
 		</form>
@@ -252,17 +265,6 @@
 							<col width="0px" />-->
 						
 							<tbody id="tbody_monitor">
-						
-								<tr class = "trOrder">
-									<th>Diverses</th><th>Kommentar</th>
-								</tr>
-								<tr class = "trOrder">
-									<th>(in Euro)</th><th></th>
-								</tr>
-								<tr class = "trOrder">
-									<td class="cell" align="center"><input id="get_diverse" name="get_diverse" type="number" min="0"max="9999" step=0.01></td>
-									<td class="cell" align="center"><input id="get_comment" name="get_comment" type="text" maxlength="500" autocomplete="off"></td>
-								</tr>
 								<tr class = "trOrder">
 									<td class="cell">Diverses:</td><td class="cell" id= "td_diverse"></td><td class="close"><button type="button" onClick="resetDiverse()">&times</button></td>
 								</tr>

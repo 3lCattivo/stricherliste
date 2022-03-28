@@ -170,5 +170,9 @@ Autocomplete!!
 .send_button{
 	padding: 30px 100px;
 	font-size:32px;
+}
+
+.send_button_column{
 	vertical-align: top;
 }
+	
