@@ -10,7 +10,7 @@ p  {
 }
 
 tr {
-	height: 80px;
+	height: 86px;
 }
 
 .button {

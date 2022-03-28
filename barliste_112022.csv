@@ -1,21 +1,21 @@
-Bierliste;Mineralwasser…;WodiOHHH;Gpritzt;"Holler Gspritzt";Safz;"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Mannerschnitten";"Longdrink
-4cl Alk.";Schnitzel;Diverses;Kommentar
-Alfenus;0;0;0;0;0;0;0;6;0;0;0;3;0;0;
-Alfons;0;0;0;0;0;0;0;0;0;0;0;0;4;0;
-"Ali Baba"
-"All Black"
-"Amboss (S-B)";0;0;0;0;0;0;0;0;0;0;0;0;0;0;
-"Ambrosius (S-B)";0;2;0;0;0;0;0;0;0;0;0;0;0;0;
-AMS
-Andropov;0;0;1;0;0;0;0;0;0;0;0;0;0;0;
-Archimedes
-Ares;0;0;0;0;0;0;0;0;0;1;0;0;0;0;
+Bierliste;Kaffee;WodiOHHH;Gpritzt;Seidl;Safz;"Anti 1/2";"Anti 1/3";Soda;Würstel;Toast;"Kaffee, Mannerschnitten";"Longdrink
+4cl Alk.";Diverses;Kommentar
+Alfenus;3;3;3;3;3;3;3;3;3;3;3;3;0;";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+Alfons;37;11;34;11;2;2;17;7;2;5;2;2;110;"RubelRUbeöRubel;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+"Ali Baba";41;24;3;17;1;1;13;4;1;11;1;1;87;";;;;;;;;;;;;;;;Jetzt gilts;;Hallo?;;;lökl"
+"All Black";1;6;5;1;1;1;1;1;1;1;1;1;0;";;"
+"Amboss (S-B)";0;2;0;4;0;0;0;0;0;0;6;0;0;
+"Ambrosius (S-B)"
+AMS;0;0;0;0;0;0;0;0;0;0;0;0;0;";"
+Andropov;0;0;0;0;0;0;34;34;0;0;0;0;0,12;";;;;;;;;;;;;;;;;;;;;;;;"
+Archimedes;4;4;4;4;4;4;4;4;4;4;4;4;0;";;;;"
+Ares
 "Armand Cernak"
 Armin
-Arn;1;0;0;0;0;0;0;0;0;0;0;0;0;0;
+Arn;0;0;0;0;0;0;0;0;0;0;0;0;0;";;"
 Artos
-Artus;0;1;0;0;0;0;0;0;0;0;0;0;0;0;
-Asparagus;0;1;0;0;0;0;0;0;0;0;0;0;0;0;
+Artus
+Asparagus
 Augustus
 Balduin
 Balu
@@ -23,16 +23,16 @@ Bap
 Beaufort
 Bierbaron
 Blanc
-Borussia;0;1;0;0;0;0;0;0;0;0;0;0;0;0;
+Borussia
 Brenneke
-Bunsenbrenner
+Bunsenbrenner;0;1;2;3;0;0;4;5;0;0;0;0;5;7
 Bürgermeister
 "Calimero (Dan)"
 Capelucci
 Cato
 Celsius
 Chico
-Chineserer;2;4;0;2;0;0;0;0;0;0;0;0;2;4298;"Spendierhosen an!!"
+Chineserer
 Chip
 Chrysostomos
 "Cicero (Belousek)"
@@ -105,7 +105,7 @@ Merkur
 "Merkur (A-S)"
 Mike
 Mischmasch
-Möbius;0;6;0;0;0;0;0;0;0;0;0;0;0;0;
+Möbius
 "Mr. Burns"
 "Nordhoff "
 "Nr 2"
@@ -122,7 +122,7 @@ Pavarotti
 "Peppone (Zach)"
 "Perikles (Gradwohl)"
 "Perikles (Semeleder)"
-Perkeo;0;0;1;0;0;0;0;0;0;0;0;0;0;0;
+Perkeo
 "Perseus (Dan)"
 Picasso
 Pippin
@@ -131,7 +131,7 @@ Placentarius
 Potter
 Pumuckl
 Quercus
-Rapid;1;0;0;0;0;0;0;0;0;0;0;0;0;0;
+Rapid
 Reblaus
 Romeo
 Romolus
@@ -184,7 +184,7 @@ WHO
 Wieland
 Winchester
 Wü
-Wusal;1;0;0;0;0;0;0;0;0;0;0;0;0;0;
+Wusal
 XVI
 Zahltag
 Fuxia
